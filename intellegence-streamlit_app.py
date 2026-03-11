@@ -3,15 +3,15 @@ import json
 import _snowflake
 from snowflake.snowpark.context import get_active_session
 from typing import Dict, List, Any, Optional, Tuple, Union
-from streamlit_extras.stylable_container import stylable_container
 
 session = get_active_session()
 
 API_ENDPOINT = "/api/v2/cortex/agent:run"
 API_TIMEOUT = 50000  # in milliseconds
 
-CORTEX_SEARCH_DOCUMENTATION = "DASH_CORTEX_AGENTS_SUMMIT.PUBLIC.DOCUMENTATION_TOOL"
-SEMANTIC_MODEL = "@DASH_CORTEX_AGENTS_SUMMIT.PUBLIC.SEMANTIC_FILES/semantic_search.yaml"
+CORTEX_SEARCH_DOCUMENTATION = "MY_CORTEX_AGENTS.DATA.DOCS"
+#SEMANTIC_MODEL = "snow://workspace/USER$.PUBLIC.DEFAULT$/versions/head/snowflake-agent/semantic_search.yaml"
+SEMANTIC_MODEL = "@MY_CORTEX_AGENTS.DATA.SEMANTIC_FILES/semantic_search.yaml"
 
 def run_snowflake_query(query):
     try:
@@ -35,7 +35,7 @@ def snowflake_api_call(query: str, limit: int = 10):
         "tools": [
             {"tool_spec": 
                 {"type": "cortex_analyst_text_to_sql",
-                 "name": "Sales Analyst"}},
+                 "name": "Cortex Analyst"}},
             
             {"tool_spec": 
                 {"type": "cortex_search",
@@ -44,7 +44,7 @@ def snowflake_api_call(query: str, limit: int = 10):
              
         ],
         "tool_resources": {
-            "Sales Analyst": 
+            "Cortex Analyst": 
                 {"semantic_model_file": SEMANTIC_MODEL},
              "Docs and Images Search": 
                  {"name": CORTEX_SEARCH_DOCUMENTATION, 
@@ -68,14 +68,14 @@ def snowflake_api_call(query: str, limit: int = 10):
         )
         
         if resp["status"] != 200:
-            st.error(f"❌ HTTP Error: {resp['status']} - {resp.get('reason', 'Unknown reason')}")
+            st.error(f"HTTP Error: {resp['status']} - {resp.get('reason', 'Unknown reason')}")
             st.error(f"Response details: {resp}")
             return None
         
         try:
             response_content = json.loads(resp["content"])
         except json.JSONDecodeError:
-            st.error("❌ Failed to parse API response. The server may have returned an invalid JSON format.")
+            st.error("Failed to parse API response. The server may have returned an invalid JSON format.")
             st.error(f"Raw response: {resp['content'][:200]}...")
             return None
 
@@ -175,7 +175,7 @@ def display_citations(citations):
                     st.markdown(text)
 
 def main():
-    st.title("Intelligent Sales Assistant")
+    st.title("Intelligent Cortex Assistant")
 
     # Sidebar for new chat
     with st.sidebar:

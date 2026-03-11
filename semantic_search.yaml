@@ -3,8 +3,8 @@ description: 'The data model consists of three core tables: DIM_ARTICLE, which s
 tables:
   - name: DIM_ARTICLE
     base_table:
-      database: DASH_CORTEX_AGENTS_SUMMIT
-      schema: PUBLIC
+      database: MY_CORTEX_AGENTS
+      schema: DATA
       table: DIM_ARTICLE
     dimensions:
       - name: ARTICLE_NAME
@@ -19,8 +19,8 @@ tables:
           - item_description
           - product_description
         cortex_search_service:
-          database: DASH_CORTEX_AGENTS_SUMMIT
-          schema: PUBLIC
+          database: MY_CORTEX_AGENTS
+          schema: DATA
           service: _ARTICLE_NAME_SEARCH
       - name: ARTICLE_CATEGORY
         expr: ARTICLE_CATEGORY
@@ -108,8 +108,8 @@ tables:
         - ARTICLE_ID
   - name: DIM_CUSTOMER
     base_table:
-      database: DASH_CORTEX_AGENTS_SUMMIT
-      schema: PUBLIC
+      database: MY_CORTEX_AGENTS
+      schema: DATA
       table: DIM_CUSTOMER
     dimensions:
       - name: CUSTOMER_NAME
@@ -210,8 +210,8 @@ tables:
         - CUSTOMER_ID
   - name: FACT_SALES
     base_table:
-      database: DASH_CORTEX_AGENTS_SUMMIT
-      schema: PUBLIC
+      database: MY_CORTEX_AGENTS
+      schema: DATA
       table: FACT_SALES
     dimensions:
       - name: SALES_CHANNEL
